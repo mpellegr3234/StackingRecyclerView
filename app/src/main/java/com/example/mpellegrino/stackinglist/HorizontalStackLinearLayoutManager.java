@@ -79,7 +79,7 @@ public class HorizontalStackLinearLayoutManager extends LinearLayoutManager {
         int childWidth = childView.getMeasuredWidth();
         int childHeight = childView.getMeasuredHeight();
 
-        int layerOneChildTop = (getHeight() - childHeight) / 2;
+        int layerOneChildTop = childView.getTop();
         // the width of all children even if they are offscreen. since we start laying out the last
         // visible child here, we use that child's position to determine the number of child views
         // before and including the current one and multiply it by the child view width plus margins
