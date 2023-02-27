@@ -9,9 +9,8 @@ public class HorizontalStackLinearConfig {
     private final static String TAG = HorizontalStackLinearConfig.class.getName();
 
     private final float mStartAlpha;
-    private final float mEndAlpha;
-    private final float mSlopeOffsetX;
-    private final float mSlopeOffsetY;
+    private final int mOffsetX;
+    private final int mOffsetY;
     private final float mSlopeAlpha;
     private final int mNumberLayers;
 
@@ -21,22 +20,15 @@ public class HorizontalStackLinearConfig {
      * removed from the stack.
      * @param numberLayers Number of layers to show for a stack
      * @param startAlpha Alpha value for the first stack layer
-     * @param endAlpha Alpha value for the last stack layer
      * @param offsetX The x distance between items in the stack in pixels
      * @param offsetY The y distance between items in the stack in pixels
      */
-    public HorizontalStackLinearConfig(int numberLayers, float startAlpha, float endAlpha, int offsetX, int offsetY) {
+    public HorizontalStackLinearConfig(int numberLayers, float startAlpha, int offsetX, int offsetY) {
         if(numberLayers <= 0){
             throw new AssertionError("numberLayers must be > 0");
         }
         if(startAlpha <= 0){
             throw new AssertionError("startAlpha must be > 0");
-        }
-        if(endAlpha < 0){
-            throw new AssertionError("endAlpha must be >= 0");
-        }
-        if(endAlpha >= startAlpha){
-            throw new AssertionError("endAlpha must be < startAlpha");
         }
         if(offsetX < 0){
             throw new AssertionError("offsetX must be >= 0");
@@ -47,10 +39,9 @@ public class HorizontalStackLinearConfig {
 
         mNumberLayers = numberLayers;
         mStartAlpha = startAlpha;
-        mEndAlpha = endAlpha;
-        mSlopeOffsetX = (offsetX * mNumberLayers) / ((float)mNumberLayers + 1);
-        mSlopeOffsetY = (offsetY * mNumberLayers) / ((float)mNumberLayers + 1);
-        mSlopeAlpha = (mStartAlpha - mEndAlpha) / (float) mNumberLayers;
+        mOffsetX = offsetX;
+        mOffsetY = offsetY;
+        mSlopeAlpha = mStartAlpha / mNumberLayers;
     }
 
     /**
@@ -89,8 +80,8 @@ public class HorizontalStackLinearConfig {
          * offsetY = mSlopeOffsetY * layer
          * alpha = mSlopeAlpha * layer
          */
-        int offsetX = (int)(mSlopeOffsetX * layer);
-        int offsetY = (int)(mSlopeOffsetY * layer);
+        int offsetX = (int)(mOffsetX * layer);
+        int offsetY = (int)(mOffsetY * layer);
         float alpha = mStartAlpha - (mSlopeAlpha * layer);
         return new StackLayer(layer, offsetX, offsetY, alpha);
     }
