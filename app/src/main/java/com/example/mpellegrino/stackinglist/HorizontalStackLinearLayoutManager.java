@@ -86,7 +86,8 @@ public class HorizontalStackLinearLayoutManager extends LinearLayoutManager {
         int currentUnstackedWidth = (marginStart + childWidth + marginEnd) * lastVisibleItemPosition;
 
         int scrollX = computeHorizontalScrollOffset(state);
-        @Px int stackStart = getWidth() - (marginStart + childWidth + marginEnd * mStackConfig.getNumberLayers());
+        // stacks starts at last fully visible child start
+        @Px int stackStart = getWidth() - (marginStart + childWidth + marginEnd);
 
 //        Log.d(TAG, "currentUnstackedWidth = " + currentUnstackedWidth + " lastVisibleItemPosition = " + lastVisibleItemPosition + " childWidth = " + childWidth + " childHeight = " + childHeight + " stackStart = " + stackStart);
 
