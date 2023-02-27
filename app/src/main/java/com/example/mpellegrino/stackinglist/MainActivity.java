@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 
         //TODO: test various offset values
         stackRecyclerView.setLayoutManager(new HorizontalStackLinearLayoutManager(MainActivity.this,
-                new HorizontalStackLinearConfig(4, 0.8f, 9, 9), false));
+                new HorizontalStackLinearConfig(20, 0.8f, 0.2f, 0, 24), false));
         mCartItemAdapter = new CartItemAdapter(new ArrayList<>());
         stackRecyclerView.setAdapter(mCartItemAdapter);
 

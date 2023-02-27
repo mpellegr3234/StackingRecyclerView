@@ -8,7 +8,8 @@ import android.support.annotation.Nullable;
 public class HorizontalStackLinearConfig {
     private final static String TAG = HorizontalStackLinearConfig.class.getName();
 
-    private final float mInitialAlpha;
+    private final float mStartAlpha;
+    private final float mEndAlpha;
     private final float mSlopeOffsetX;
     private final float mSlopeOffsetY;
     private final float mSlopeAlpha;
@@ -19,29 +20,37 @@ public class HorizontalStackLinearConfig {
      * items, layering them, and the opacity to use as the list is scrolled and items are added or
      * removed from the stack.
      * @param numberLayers Number of layers to show for a stack
-     * @param initialAlpha Initial alpha value for the first stack layer
+     * @param startAlpha Alpha value for the first stack layer
+     * @param endAlpha Alpha value for the last stack layer
      * @param offsetX The x distance between items in the stack in pixels
      * @param offsetY The y distance between items in the stack in pixels
      */
-    public HorizontalStackLinearConfig(int numberLayers, float initialAlpha, int offsetX, int offsetY) {
+    public HorizontalStackLinearConfig(int numberLayers, float startAlpha, float endAlpha, int offsetX, int offsetY) {
         if(numberLayers <= 0){
             throw new AssertionError("numberLayers must be > 0");
         }
-        if(initialAlpha <= 0){
-            throw new AssertionError("initialAlpha must be > 0");
+        if(startAlpha <= 0){
+            throw new AssertionError("startAlpha must be > 0");
         }
-        if(offsetX <= 0){
-            throw new AssertionError("offsetX must be > 0");
+        if(endAlpha < 0){
+            throw new AssertionError("endAlpha must be >= 0");
         }
-        if(offsetY <= 0){
-            throw new AssertionError("offsetY must be > 0");
+        if(endAlpha >= startAlpha){
+            throw new AssertionError("endAlpha must be < startAlpha");
+        }
+        if(offsetX < 0){
+            throw new AssertionError("offsetX must be >= 0");
+        }
+        if(offsetY < 0){
+            throw new AssertionError("offsetY must be >= 0");
         }
 
         mNumberLayers = numberLayers;
-        mInitialAlpha = initialAlpha;
+        mStartAlpha = startAlpha;
+        mEndAlpha = endAlpha;
         mSlopeOffsetX = (offsetX * mNumberLayers) / ((float)mNumberLayers + 1);
         mSlopeOffsetY = (offsetY * mNumberLayers) / ((float)mNumberLayers + 1);
-        mSlopeAlpha = 1 / (float) mNumberLayers;
+        mSlopeAlpha = (mStartAlpha - mEndAlpha) / (float) mNumberLayers;
     }
 
     /**
@@ -82,7 +91,7 @@ public class HorizontalStackLinearConfig {
          */
         int offsetX = (int)(mSlopeOffsetX * layer);
         int offsetY = (int)(mSlopeOffsetY * layer);
-        float alpha = mInitialAlpha - (mSlopeAlpha * layer);
+        float alpha = mStartAlpha - (mSlopeAlpha * layer);
         return new StackLayer(layer, offsetX, offsetY, alpha);
     }
 

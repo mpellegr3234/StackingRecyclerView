@@ -10,7 +10,7 @@
     <com.example.mpellegrino.stackinglist.StackingRecyclerView
         android:id="@+id/stack_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="500dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
