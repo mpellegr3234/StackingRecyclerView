@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-//TODO: test vertical, on a grid, and on a staggered grid
 /**
  * Used to layout the child views in a stack
  */
@@ -23,11 +22,17 @@ public class HorizontalStackLinearLayoutManager extends LinearLayoutManager {
      * @param stackFromEnd Whether to show the list pre-scrolled to the end
      */
     public HorizontalStackLinearLayoutManager(Context context, @NonNull HorizontalStackLinearConfig stackConfig, boolean stackFromEnd) {
-        //TODO: reverse layout crashing
         super(context, HORIZONTAL, false);
         mStackConfig = stackConfig;
         //TODO: stackFromEnd = true does not allow scrolling at all
         setStackFromEnd(stackFromEnd);
+    }
+
+    @Override
+    public void setReverseLayout(boolean reverseLayout){
+        if(reverseLayout) {
+            Log.w(TAG, "This view is not compatible with reverse layout = true");
+        }
     }
 
     @Override
