@@ -40,7 +40,7 @@ public class HorizontalStackLinearConfig {
         mNumberLayers = numberLayers;
         mInitialAlpha = initialAlpha;
         mSlopeOffsetX = (offsetX * mNumberLayers) / ((float)mNumberLayers + 1);
-        mSlopeOffsetY = (offsetX * mNumberLayers) / ((float)mNumberLayers + 1);
+        mSlopeOffsetY = (offsetY * mNumberLayers) / ((float)mNumberLayers + 1);
         mSlopeAlpha = 1 / (float) mNumberLayers;
     }
 
